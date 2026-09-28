@@ -1,0 +1,151 @@
+/* @import "tailwindcss"; */
+/* ⚠️ Tailwind v3 hai? Upar wali line hata kar ye 3 lagao: */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f8fafc;
+}
+
+::selection {
+  background: #c7d2fe;
+  color: #1e1b4b;
+}
+
+:focus-visible {
+  outline: 2px solid #4f46e5;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ═══════════ SCROLL REVEAL ═══════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 650ms var(--ease),
+    transform 650ms var(--ease);
+}
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════ HERO ENTRANCE ═══════════ */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-enter {
+  animation: fade-up 550ms var(--ease) both;
+}
+
+/* ═══════════ MARQUEE (notice + testimonials) ═══════════ */
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+@keyframes marquee-reverse {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+.animate-marquee-reverse {
+  animation: marquee-reverse 34s linear infinite;
+}
+.marquee-hover-pause:hover .animate-marquee,
+.marquee-hover-pause:hover .animate-marquee-reverse {
+  animation-play-state: paused;
+}
+
+/* ═══════════ FLOAT / BREATHE ═══════════ */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+.animate-float {
+  animation: float 3.5s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1);    opacity: 0.4; }
+  50%      { transform: scale(1.08); opacity: 0.6; }
+}
+.animate-breathe {
+  animation: breathe 12s ease-in-out infinite;
+}
+
+/* ═══════════ WHATSAPP CTA — pulse + shine ═══════════ */
+@keyframes cta-pulse {
+  0%   { box-shadow: 0 10px 24px -6px rgb(5 150 105 / 0.35), 0 0 0 0 rgb(5 150 105 / 0.45); }
+  70%  { box-shadow: 0 10px 24px -6px rgb(5 150 105 / 0.35), 0 0 0 14px rgb(5 150 105 / 0); }
+  100% { box-shadow: 0 10px 24px -6px rgb(5 150 105 / 0.35), 0 0 0 0 rgb(5 150 105 / 0); }
+}
+.cta-pulse {
+  animation: cta-pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes cta-shine {
+  0%, 55% { transform: translateX(-140%) skewX(-15deg); }
+  100%    { transform: translateX(280%) skewX(-15deg); }
+}
+.cta-shine {
+  position: relative;
+  overflow: hidden;
+}
+.cta-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 45%;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.22), transparent);
+  transform: translateX(-140%) skewX(-15deg);
+  animation: cta-shine 4.5s ease-in-out infinite;
+  animation-delay: 1.2s;
+}
+
+/* ═══════════ MOBILE MENU entrance ═══════════ */
+@keyframes menu-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.menu-in {
+  animation: menu-in 250ms var(--ease) both;
+}
+
+/* ═══════════ TEXTURES ═══════════ */
+.bg-dots {
+  background-image: radial-gradient(rgb(15 23 42 / 0.07) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 90%);
+  mask-image: linear-gradient(to bottom, black 30%, transparent 90%);
+}
+.bg-dots-light {
+  background-image: radial-gradient(rgb(255 255 255 / 0.09) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* ═══════════ ACCESSIBILITY (mandatory) ═══════════ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
